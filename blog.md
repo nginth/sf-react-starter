@@ -43,6 +43,49 @@ ReactDOM.render(
     document.getElementById('root')
 )
 ```
-This will render a simple hello-world header on your page.
+This will render a simple hello-world header on your page. Run `webpack`. If there's no errors, and a `bundle.js` file shows up in your `/static/dist/` directory, then you're set! If you want webpack to watch the `/src` directory for any changes, you can run it as such: `webpack -d --watch`.
+
+#### Set up Express server
+Now, we need a way to actually serve this static bundle.js file. For development purposes we'll use Express to serve it. To do this, create a file called `app.js` in the project's root directory:
+```js
+const path = require('path')
+const express = require('express')
+const app = express()
+
+app.use('/static', express.static('static'))
+app.get('*', function(req, res) {
+    res.sendFile(__dirname + '/static/index.html')
+})
+
+app.listen(8080);
+```
+Just run this file with node like so:
+`node app.js`
+and the server should be running.
+
+#### Running on Salesforce
+Now we'll actually get the app up and running on your Salesforce instance. First, create a Visualforce page on your Salesforce org with the following markup:
+```html
+<apex:page docType="html-5.0" applyHtmlTag="false" applyBodyTag="false"
+           showHeader="false" sidebar="false" standardStylesheets="false"
+           title="Unused Title">
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <script type="text/javascript" src="<localtunnel>"></script>
+</html>
+</apex:page>
+```
+This is an empty container page which is equivalent to the html page we created earlier. One thing to point out is the script tag. Notice the src property. You'll replace <localtunnel> with a url you get in the next section.
+
+#### Creating a localtunnel to your bundle.js
+Install localtunnel:
+`npm install -g localtunnel`
+This is a convienient tunnel from your machine to the internet. Next, run:
+`lt --port 8080`
+This will expose your app running locally to the internet. It should output a url. Go to this url in the browser and confirm that your React app is running. If you see the same page as when you go to `localhost:8080`, then you're set! Use `<your url>/static/dist/bundle.js` in place of `<localtunnel>`. 
+
+Now, any time you update your React project, the changes will show up on your Visualforce page! This is very convienient for rapid development. Once you're ready for production, you can deploy your `bundle.js` to Salesforce as a static resource and use it directly from there. This will take advantage of Salesforce's static resource caching and such.
 
 
