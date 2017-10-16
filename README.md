@@ -5,13 +5,19 @@ Create a new folder with a name such ass `sf-react-project`. This will be the ro
 
 Next, run the following commands to install all the required dependencies for developing with React.
 
-`npm init`
+```bash
+npm init
+```
 Creates a package.json for your project - describes all your dependencies, etc.
 
-`npm install --save react react-dom react-router-dom express`
+```bash
+npm install --save react react-dom react-router-dom express
+```
 This installs React and Express and saves it as a dependency for anyone who wants to build your project later.
 
-`npm install --save-dev webpack babel babel-core babel-loader babel-preset-react babel-preset-env babel-preset-stage-1`
+```bash
+npm install --save-dev webpack babel babel-core babel-loader babel-preset-react babel-preset-env babel-preset-stage-1
+```
 This installs the development dependencies. Webpack is the build tool that calls babel (the JS compiler) and packs all of the JavaScript into one file called `bundle.js`. The babel presets are basically what tells babel how to compile your React JSX and ES6 code into JavaScript that the browser can understand.
 
 ### Project structure
