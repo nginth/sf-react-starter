@@ -63,7 +63,7 @@ module.exports = {
 };
 ```
 
-This basically just tells webpack where to look for your source code, how to compile it, and where to put the resulting bundle file.
+This basically just tells webpack where to look for your source code, how to compile it, and where to put the resulting bundle file. You can find a more in-depth explanation [in the official webpack docs.](https://webpack.js.org/guides/getting-started/#using-a-configuration)
 
 ### React Component
 Now we'll build a react component to actually populate the page.
