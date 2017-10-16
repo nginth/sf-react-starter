@@ -19,7 +19,7 @@ Create 2 folders in the root folder you've been working in: `src` and `static`.
 
 Next, create another folder inside `/static` called `dist`. You don't need to create anything in here manually, this is just where webpack will put the `bundle.js` file.
 
-#### HTML Root
+### Base HTML Page
 Inside `/static`, create a file called `index.html` containing this markup:
 ```html
 <html>
@@ -30,7 +30,42 @@ Inside `/static`, create a file called `index.html` containing this markup:
 ```
 The `div` with id `root` will be what React hooks onto and renders your application in.
 
-#### React Component
+### Webpack Configuration
+Before we get to writing any React, we need to configure webpack to be able to compile our source code. Create a file called `webpack.config.js` in the root directory of the project. 
+```js
+const webpack = require("webpack");
+
+module.exports = {
+	entry: ["./src/index.jsx"],
+
+	output: {
+		path: __dirname + "/static/dist/",
+		filename: "bundle.js",
+	},
+
+	resolve: {
+		extensions: [".js", ".jsx"],
+	},
+
+	module: {
+		loaders: [
+			{
+				test: /\.jsx?$/,
+				loader: "babel-loader",
+				query: {
+					presets: ["env", "react", "stage-1"],
+				},
+				exclude: /node_modules/,
+			},
+		],
+	},
+	plugins: [],
+};
+```
+
+This basically just tells webpack where to look for your source code, how to compile it, and where to put the resulting bundle file.
+
+### React Component
 Now we'll build a react component to actually populate the page.
 
 In the `/src` folder, create a file `index.jsx` with the following code:
@@ -39,13 +74,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 ReactDOM.render(
-    <h1>Hello, React-Salesforce!</h1>,
+    <h1>Hello, React+Salesforce!</h1>,
     document.getElementById('root')
 )
 ```
 This will render a simple hello-world header on your page. Run `webpack`. If there's no errors, and a `bundle.js` file shows up in your `/static/dist/` directory, then you're set! If you want webpack to watch the `/src` directory for any changes, you can run it as such: `webpack -d --watch`.
 
-#### Set up Express server
+### Set up Express server
 Now, we need a way to actually serve this static bundle.js file. For development purposes we'll use Express to serve it. To do this, create a file called `app.js` in the project's root directory:
 ```js
 const path = require('path')
@@ -63,7 +98,7 @@ Just run this file with node like so:
 `node app.js`
 and the server should be running.
 
-#### Running on Salesforce
+### Running on Salesforce
 Now we'll actually get the app up and running on your Salesforce instance. First, create a Visualforce page on your Salesforce org with the following markup:
 ```html
 <apex:page docType="html-5.0" applyHtmlTag="false" applyBodyTag="false"
@@ -79,7 +114,7 @@ Now we'll actually get the app up and running on your Salesforce instance. First
 ```
 This is an empty container page which is equivalent to the html page we created earlier. One thing to point out is the script tag. Notice the src property. You'll replace <localtunnel> with a url you get in the next section.
 
-#### Creating a localtunnel to your bundle.js
+### Creating a localtunnel to your bundle.js
 Install localtunnel:
 `npm install -g localtunnel`
 This is a convienient tunnel from your machine to the internet. Next, run:
