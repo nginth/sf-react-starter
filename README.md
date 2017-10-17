@@ -1,7 +1,7 @@
 # How to set up a React environment for use in Salesforce
 
 ### Installation
-Create a new folder with a name such ass `sf-react-project`. This will be the root folder for the project.
+Create a new folder with a name such as `sf-react-project`. This will be the root folder for the project.
 
 Next, run the following commands to install all the required dependencies for developing with React.
 
