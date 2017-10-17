@@ -1,7 +1,7 @@
 # How to set up a React environment for use in Salesforce
 
 ### Installation
-Create a new folder with a name such ass `sf-react-project`. This will be the root folder for the project.
+Create a new folder with a name such as `sf-react-project`. This will be the root folder for the project.
 
 Next, run the following commands to install all the required dependencies for developing with React.
 
@@ -32,11 +32,13 @@ Inside `/static`, create a file called `index.html` containing this markup:
 <body>
     <div id="root"></div>
 </body>
+<script type="text/javascript" src="/static/dist/bundle.js"></script>
 </html>
 ```
-The `div` with id `root` will be what React hooks onto and renders your application in.
+The `div` with id `root` will be what React hooks onto and renders your application in. 
 
 ### Webpack Configuration
+
 Before we get to writing any React, we need to configure webpack to be able to compile our source code. Create a file called `webpack.config.js` in the root directory of the project. 
 ```js
 const webpack = require("webpack");
